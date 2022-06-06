@@ -1,0 +1,52 @@
+syntax = "proto3";
+/*The first line of the file specifies that you’re using the syntax proto3.
+ If you don’t do this the protocol buffer compiler will assume you are using proto2.
+This must be the first non-empty, non-comment line of the file.*/
+
+package book;
+/*
+In Java, the package is used as the Java package,
+ unless you explicitly provide the option java_package in your
+.proto file, which we do.
+*/
+
+option java_package = "com.example.grpc01";
+option java_outer_classname = "BookProto";
+/*
+option java_package is used to define the Java package where you want your generated Java class to be placed.
+option java_outer_classname is used to set the name of the generated Java class.
+ If this is not set, protoc will use the name of the .proto file.
+*/
+
+
+
+message Book {
+  int64 isbn = 1;
+  string title = 2;
+  string author = 3;
+}
+/*
+This block of code defines the schema of your Book.
+This particular message is called a Book, and has 3 fields:
+int64 isbn
+string title
+string author
+Without jumping too far ahead, when you make rpc requests for a Book, it will return a Book in this format.
+*/
+
+message GetBookRequest {
+  int64 isbn = 1;
+}
+/*
+This block of code defines the schema of your request to get a book.
+This particular message is called a GetBookRequest, and has 1 field, int64 isbn.
+*/
+
+service BookService {
+  rpc GetBook (GetBookRequest) returns (Book);
+}
+
+/*
+This last part of the .proto file defines your service to request books, called BookService.
+It has 1 function, named GetBook, which takes a GetBookRequest message as a parameter, and return a Book message.
+*/

@@ -1,0 +1,84 @@
+plugins {
+    id 'com.android.application'
+  //  id 'com.google.protobuf'
+    id 'kotlin-android'
+    id 'com.google.protobuf' version '0.8.15'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.example.grpc01"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.5.1-1"
+    }
+    plugins {
+        javalite {
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.20.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            /*task.builtins {
+                java { option 'lite' }
+            }*/
+            task.plugins {
+                javalite{}
+                grpc { option 'lite' }
+            }
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+
+    implementation 'com.google.guava:guava:28.2-android'
+
+
+    // You need to build grpc-java to obtain these libraries below.
+    implementation 'io.grpc:grpc-okhttp:1.20.0' // CURRENT_GRPC_VERSION
+    implementation 'io.grpc:grpc-protobuf-lite:1.20.0' // CURRENT_GRPC_VERSION
+    implementation 'io.grpc:grpc-stub:1.20.0' // CURRENT_GRPC_VERSION
+    implementation 'io.grpc:grpc-netty-shaded:1.20.0'
+    implementation 'org.apache.tomcat:annotations-api:6.0.53'
+
+    //implementation "io.grpc:grpc-kotlin-stub-lite:1.0.0"
+
+    
+}
