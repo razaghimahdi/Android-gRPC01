@@ -1,4 +1,7 @@
 
+Give a Star! ⭐
+If you like or are using this project to learn or start your solution, please give it a star. Thanks!
+
 ## What is gRPC?
 gRPC stands for **Google — Remote Procedure Call**, 
 and it is a framework for communication utilizing **Protocol Buffers**.
